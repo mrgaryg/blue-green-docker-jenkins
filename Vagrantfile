@@ -12,11 +12,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       config.vm.synced_folder ".", "/vagrant", :nfs => { :mount_options => ["dmode=777","fmode=777"] }
   end
 
-
-  #config.vm.synced_folder ".", "/vagrant"
-  #config.vm.synced_folder ".", "/vagrant", v: ["dmode=700,fmode=600"]
-  # config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=777","fmode=777"], :owner => "vagrant", :group => "vagrant"
-
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
   config.hostmanager.manage_guest = true
@@ -29,7 +24,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.vm.hostname = "swarm-master"
     d.vm.network "public_network", ip: "10.100.192.200"
     d.vm.network "forwarded_port", guest: 8080, host: 8080
-    #d.vm.network "forwarded_port", guest: 2222, host: 2222
     
     # If true, then any SSH connections made will enable agent forwarding.
     # Default value: false
