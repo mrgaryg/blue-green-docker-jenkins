@@ -1,6 +1,26 @@
+# - name: Add docker apt keys
+#   apt_key: 
+#     keyserver: keyserver.ubuntu.com 
+#     id: 36A1D7869245C8950F966E92D8576A8BA88D21E9
+#   tags: [docker]
+- name: Ensure APT transport HTTPS is installed | Debian / Ubuntu
+  apt:
+    name: 'apt-transport-https'
+    state: installed
+  tags: [docker]
+
+- name: Add docker apt keys
+  apt_key: 
+    keyserver: p80.pool.sks-keyservers.net 
+    id: 58118E89F3A912897C070ADBF76221572C52609D
+  tags: [docker]
+
+# - name: Update apt
+#   apt_repository: repo='deb https://get.docker.com docker main' state=present
+
 - name: Debian add Docker repository and update apt cache
   apt_repository:
-    repo: deb https://apt.dockerproject.org/repo ubuntu-vivid main
+    repo: deb https://apt.dockerproject.org/repo ubuntu-trusty main
     update_cache: yes
     state: present
   tags: [docker]
@@ -11,6 +31,11 @@
     state: latest
     force: yes
   tags: [docker]
+
+  
+# - name: Install Docker
+#   apt: pkg=lxc-docker update_cache=yes
+#   tags: [docker]
 
 - name: Debian python-pip is present
   apt: name=python-pip state=present
@@ -28,7 +53,7 @@
   tags: [docker]
 
 - name: Debian Daemon is reloaded
-  command: systemctl daemon-reload
+  shell: systemctl daemon-reload
   when: copy_result|changed
   tags: [docker]
 
